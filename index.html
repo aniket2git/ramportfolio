@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Content Styles */
+        main {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            min-height: 70vh;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Homepage Styles */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #667eea;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: #666;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Resume Styles */
+        .resume-section {
+            margin-bottom: 3rem;
+        }
+
+        .resume-section h3 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .resume-item {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .resume-item h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .resume-item .date {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .download-btn {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .download-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .video-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .video-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Projects Styles */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .project-links a:hover {
+            color: #5a6fd8;
+        }
+
+        /* Blog Styles */
+        .blog-post {
+            background: #fff;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .blog-date {
+            color: #667eea;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-title {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .read-more:hover {
+            color: #5a6fd8;
+        }
+
+        /* Contact Styles */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .social-links {
+            text-align: center;
+        }
+
+        .social-link {
+            display: inline-block;
+            margin: 1rem;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .contact-form {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Courses Styles */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .course-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .course-title {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .course-platform {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(255, 255, 255, 0.95);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 2rem 0;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .profile-img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #27ae60;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(39, 174, 96, 0.1);
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Ram Singh</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showPage('resume')">Resume</a></li>
+                <li><a href="#" onclick="showPage('projects')">Projects</a></li>
+                <li><a href="#" onclick="showPage('blog')">Blog</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                <li><a href="#" onclick="showPage('courses')">Courses</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Homepage -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <img src="https://via.placeholder.com/200x200/667eea/ffffff?text=Your+Photo" alt="Profile Picture" class="profile-img">
+                <h1>Ram singh</h1>
+                <h2>Pursuing IITM BS DS</h2>
+                <p>Passionate developer with expertise in modern web technologies. I love creating beautiful, functional websites and applications that solve real-world problems. Welcome to my digital portfolio!</p>
+                <a href="#" onclick="showPage('projects')" class="cta-button">View My Work</a>
+            </div>
+        </div>
+
+        <!-- Resume Page -->
+        <div id="resume" class="page">
+            <h2>My Resume</h2>
+            
+            <div class="video-container">
+                <h3>Who am I?</h3>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                <p><em>Replace the YouTube URL above with your own introduction video</em></p>
+            </div>
+
+            <div class="resume-section">
+                <h3>Work Experience</h3>
+                <div class="resume-item">
+                    <h4>Senior Full Stack Developer</h4>
+                    <div class="date">Jan 2022 - Present</div>
+                    <p>TechCorp Solutions</p>
+                    <ul>
+                        <li>Led development of 5+ web applications using React and Node.js</li>
+                        <li>Mentored junior developers and improved team productivity by 30%</li>
+                        <li>Implemented CI/CD pipelines reducing deployment time by 50%</li>
+                    </ul>
+                </div>
+                <div class="resume-item">
+                    <h4>Frontend Developer</h4>
+                    <div class="date">Jun 2020 - Dec 2021</div>
+                    <p>StartupXYZ</p>
+                    <ul>
+                        <li>Built responsive web applications for 10,000+ users</li>
+                        <li>Collaborated with design team to implement pixel-perfect UIs</li>
+                        <li>Optimized application performance achieving 95+ PageSpeed scores</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h3>Education</h3>
+                <div class="resume-item">
+                    <h4>Bachelor of Science in Computer Science</h4>
+                    <div class="date">2016 - 2020</div>
+                    <p>University of Technology</p>
+                    <p>GPA: 3.8/4.0 | Relevant Coursework: Data Structures, Web Development, Database Systems</p>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h3>Skills</h3>
+                <div class="resume-item">
+                    <h4>Technical Skills</h4>
+                    <p><strong>Frontend:</strong> HTML5, CSS3, JavaScript, React, Vue.js, TypeScript</p>
+                    <p><strong>Backend:</strong> Node.js, Python, PHP, Express.js, Django</p>
+                    <p><strong>Database:</strong> MySQL, MongoDB, PostgreSQL</p>
+                    <p><strong>Tools:</strong> Git, Docker, AWS, Figma, VS Code</p>
+                </div>
+            </div>
+
+            <button class="download-btn" onclick="downloadResume()">📄 Download Resume PDF</button>
+        </div>
+
+        <!-- Projects Page -->
+        <div id="projects" class="page">
+            <h2>My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img">📱 E-Commerce App</div>
+                    <div class="project-content">
+                        <h3 class="project-title">E-Commerce Website</h3>
+                        <p>A full-stack e-commerce platform with user authentication, shopping cart, and payment integration. Built for a local business to increase their online presence.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Stripe API</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/ecommerce" target="_blank">🔗 GitHub</a>
+                            <a href="https://your-ecommerce-demo.com" target="_blank">🚀 Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">🎯 Task Manager</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Task Management System</h3>
+                        <p>A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">Socket.io</span>
+                            <span class="tech-tag">Express</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/task-manager" target="_blank">🔗 GitHub</a>
+                            <a href="https://your-taskmanager-demo.com" target="_blank">🚀 Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">📊 Analytics Dashboard</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Analytics Dashboard</h3>
+                        <p>A comprehensive analytics dashboard for tracking website performance with interactive charts and real-time data visualization.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">D3.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/analytics-dashboard" target="_blank">🔗 GitHub</a>
+                            <a href="https://your-analytics-demo.com" target="_blank">🚀 Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">🎮 Game Portal</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Online Game Portal</h3>
+                        <p>A web-based gaming platform featuring multiple mini-games, user profiles, leaderboards, and social features for competitive gaming.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Canvas API</span>
+                            <span class="tech-tag">WebSocket</span>
+                            <span class="tech-tag">Redis</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/yourusername/game-portal" target="_blank">🔗 GitHub</a>
+                            <a href="https://your-gameportal-demo.com" target="_blank">🚀 Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Page -->
+        <div id="blog" class="page">
+            <h2>Latest Blog Posts</h2>
+            
+            <article class="blog-post">
+                <div class="blog-date">May 25, 2025</div>
+                <h3 class="blog-title">The Future of Web Development: Trends to Watch</h3>
+                <p class="blog-excerpt">Exploring the latest trends in web development including WebAssembly, Progressive Web Apps, and the rise of edge computing. These technologies are reshaping how we build and deploy web applications...</p>
+                <a href="https://medium.com/@yourusername/future-of-web-dev" class="read-more" target="_blank">Read more →</a>
+            </article>
+
+            <article class="blog-post">
+                <div class="blog-date">May 18, 2025</div>
+                <h3 class="blog-title">Building Scalable React Applications: Best Practices</h3>
+                <p class="blog-excerpt">A comprehensive guide to building maintainable and scalable React applications. Learn about component architecture, state management patterns, and performance optimization techniques...</p>
+                <a href="https://medium.com/@yourusername/scalable-react-apps" class="read-more" target="_blank">Read more →</a>
+            </article>
+
+            <article class="blog-post">
+                <div class="blog-date">May 10, 2025</div>
+                <h3 class="blog-title">My Journey from Beginner to Full Stack Developer</h3>
+                <p class="blog-excerpt">Sharing my personal journey in learning web development, the challenges I faced, resources that helped me, and advice for aspiring developers starting their coding journey...</p>
+                <a href="https://medium.com/@yourusername/developer-journey" class="read-more" target="_blank">Read more →</a>
+            </article>
+
+            <article class="blog-post">
+                <div class="blog-date">May 3, 2025</div>
+                <h3 class="blog-title">CSS Grid vs Flexbox: When to Use What</h3>
+                <p class="blog-excerpt">A detailed comparison of CSS Grid and Flexbox layout systems. Understanding when to use each approach for different layout scenarios with practical examples and use cases...</p>
+                <a href="https://medium.com/@yourusername/css-grid-vs-flexbox" class="read-more" target="_blank">Read more →</a>
+            </article>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <h2>Get In Touch</h2>
+            <div class="contact-content">
+                <div class="social-links">
+                    <h3>Connect with me</h3>
+                    <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-link">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💼</div>
+                        <div>LinkedIn</div>
+                        <div style="font-size: 0.9rem; color: #666;">Professional Network</div>
+                    </a>
+                    <a href="https://github.com/yourusername" target="_blank" class="social-link">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
+                        <div>GitHub</div>
+                        <div style="font-size: 0.9rem; color: #666;">Code Repository</div>
+                    </a>
+                </div>
+
+                <div class="contact-form">
+                    <h3>Send me a message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                            <div class="error-message" id="nameError">Please enter your name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error-message" id="emailError">Please enter a valid email address</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                            <div class="error-message" id="messageError">Please enter your message</div>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                        <div class="success-message" id="successMessage">
+                            Thank you! Your message has been sent successfully.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Page -->
+        <div id="courses" class="page">
+            <h2>Courses & Certifications</h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <h3 class="course-title">Full Stack Web Development</h3>
+                    <div class="course-platform">Coursera - Meta</div>
+                    <div class="course-date">Completed: April 2025</div>
+                    <p>Comprehensive program covering React, Node.js, databases, and deployment strategies. Built 5 full-stack projects including a social media application.</p>
+                    <a href="#" onclick="alert('Certificate download functionality would be implemented here')" style="color: #667eea; text-decoration: none; font-weight: bold;">📜 View Certificate</a>
+                </div>
+
+                <div class="course-card">
+                    <h3 class="course-title">AWS Cloud Practitioner</h3>
+                    <div class="course-platform">Amazon Web Services</div>
+                    <div class="course-date">Completed: March 2025</div>
+                    <p>Foundational understanding of AWS cloud services, security, architecture, pricing, and support. Gained practical experience with EC2, S3, and RDS.</p>
+                    <a href="#" onclick="alert('Certificate download functionality would be implemented here')" style="color: #667eea; text-decoration: none; font-weight: bold;">📜 View Certificate</a>
+                </div>
+
+                <div class="course-card">
+                    <h3 class="course-title">JavaScript Algorithms and Data Structures</h3>
+                    <div class="course-platform">freeCodeCamp</div>
+                    <div class="course-date">Completed: February 2025</div>
+                    <p>In-depth study of JavaScript fundamentals, ES6 features, data structures, and algorithm design. Completed 100+ coding challenges.</p>
+                    <a href="#" onclick="alert('Certificate download functionality would be implemented here')" style="color: #667eea; text-decoration: none; font-weight: bold;">📜 View Certificate</a>
+                </div>
+
+                <div class="course-card">
+                    <h3 class="course-title">Responsive Web Design</h3>
+                    <div class="course-platform">freeCodeCamp</div>
+                    <div class="course-date">Completed: January 2025</div>
+                    <p>Mastered HTML5, CSS3, Flexbox, Grid, and responsive design principles. Built 5 responsive websites including a tribute page and product landing page.</p>
+                    <a href="#" onclick="alert('Certificate download functionality would be implemented here')" style="color: #667eea; text-decoration: none; font-weight: bold;">📜 View Certificate</a>
+                </div>
+
+                <div class="course-card">
+                    <h3 class="course-title">Google UX Design Certificate</h3>
+                    <div class="course-platform">Coursera - Google</div>
+                    <div class="course-date">Completed: December 2024</div>
+                    <p>Comprehensive UX design program covering user research, wireframing, prototyping, and usability testing. Created a complete mobile app design portfolio.</p>
+                    <a href="#" onclick="alert('Certificate download functionality would be implemented here')" style="color: #667eea; text-decoration: none; font-weight: bold;">📜 View Certificate</a>
+                </div>
+
+                <div class="course-card">
+                    <h3 class="course-title">Python for Data Science</h3>
+                    <div class="course-platform">edX - IBM</div>
+                    <div class="course-date">Completed: November 2024</div>
+                    <p>Python programming fundamentals with focus on data analysis using pandas, NumPy, and matplotlib. Completed real-world data science projects.</p>
+                    <a href="#" onclick="alert('Certificate download functionality would be implemented here')" style="color: #667eea; text-decoration: none; font-weight: bold;">📜 View Certificate</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Your Name. All rights reserved. | Built with HTML, CSS & JavaScript</p>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentPage = 'home';
+
+        // Navigation functions
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Close mobile menu if open
+            closeMobileMenu();
+            
+            // Update current page
+            currentPage = pageId;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        // Resume download function
+        function downloadResume() {
+            // In a real application, this would trigger a PDF download
+            alert('Resume download would start here!\n\nTo implement:\n1. Create a PDF version of your resume\n2. Host it on your server\n3. Link to the PDF file');
+            
+            // Example implementation:
+            // const link = document.createElement('a');
+            // link.href = 'path/to/your-resume.pdf';
+            // link.download = 'Your-Name-Resume.pdf';
+            // link.click();
+        }
+
+        // Contact form validation and submission
+        function validateForm() {
+            let isValid = true;
+            
+            // Get form elements
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const message = document.getElementById('message');
+            
+            // Get error elements
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const messageError = document.getElementById('messageError');
+            
+            // Reset previous errors
+            nameError.style.display = 'none';
+            emailError.style.display = 'none';
+            messageError.style.display = 'none';
+            
+            // Validate name
+            if (!name.value.trim()) {
+                nameError.style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim() || !emailRegex.test(email.value)) {
+                emailError.style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate message
+            if (!message.value.trim()) {
+                messageError.style.display = 'block';
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            if (validateForm()) {
+                // Show success message
+                const successMessage = document.getElementById('successMessage');
+                successMessage.style.display = 'block';
+                
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+                
+                // In a real application, you would send the form data to your server
+                console.log('Form submitted successfully!');
+            }
+        }
+
+        // Smooth scrolling for internal links
+        function smoothScroll(target) {
+            document.querySelector(target).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up form submission
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', submitForm);
+            
+            // Add click listeners to navigation links
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+                    showPage(pageId);
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const nav = document.querySelector('nav');
+                const hamburger = document.querySelector('.hamburger');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+            });
+            
+            // Add smooth transitions
+            window.addEventListener('resize', function() {
+                closeMobileMenu();
+            });
+        });
+
+        // Additional utility functions
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Copied to clipboard: ' + text);
+            });
+        }
+
+        // Animate elements on scroll (optional enhancement)
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.project-card, .blog-post, .course-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            elements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Call animation function when page loads
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
